@@ -1,6 +1,5 @@
 import "react-native-gesture-handler";
 import { NavigationContainer } from "@react-navigation/native";
-import TabNavigation from "./components/TabNavigation";
 import LoginScreen from "./screens/LoginScreen";
 import { createStackNavigator } from "@react-navigation/stack";
 import { onAuthStateChanged } from "firebase/auth";
@@ -31,8 +30,14 @@ export default function App() {
             name="Main"
             component={loggedIn ? HomeScreen : LoginScreen}
           />
-          <Stack.Screen name="ShoppingCart" component={ShoppingCartSceen} />
-          <Stack.Screen name="UserScreen" component={UserScreen} />
+          <Stack.Screen
+            name="ShoppingCart"
+            component={loggedIn ? ShoppingCartSceen : LoginScreen}
+          />
+          <Stack.Screen
+            name="UserScreen"
+            component={loggedIn ? UserScreen : LoginScreen}
+          />
         </Stack.Navigator>
       </NavigationContainer>
     </CartProvider>

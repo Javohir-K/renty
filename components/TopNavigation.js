@@ -20,12 +20,12 @@ const TopNavigation = ({ title, menu_content }) => {
         <FontAwesomeIcon
           icon={faEllipsisVertical}
           size={20}
-          color={colors._secondary}
+          color={colors._accent}
         />
       </TouchableOpacity>
-      <View style={menu ? back_btn_style.menu : back_btn_style.menu_hidden}>
+      {/* <View style={menu ? back_btn_style.menu : back_btn_style.menu_hidden}>
         {menu_content}
-      </View>
+      </View> */}
     </View>
   );
 };

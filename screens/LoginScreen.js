@@ -5,14 +5,12 @@ import { login_style } from "../design/style";
 import GoogleIcon from "../assets/google.png";
 import PizzaIcon from "../assets/pizza.png";
 
-import { auth } from "../api/firebase";
+import { auth, db } from "../api/firebase";
 import { Pressable } from "react-native";
 
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
-  GoogleAuthProvider,
-  signInWithPopup,
 } from "firebase/auth";
 
 const LoginScreen = () => {
@@ -20,11 +18,11 @@ const LoginScreen = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
+  const [phone, setPhone] = useState(null);
   const [checkpassword, setCheckPassword] = useState("");
   const navigation = useNavigation();
   const [errorPassword, setErrorPassword] = useState("");
   const [error, setError] = useState("");
-  const provider = new GoogleAuthProvider();
   useLayoutEffect(() => {
     navigation.setOptions({
       headerShown: false,
@@ -52,34 +50,17 @@ const LoginScreen = () => {
     try {
       if (password === checkpassword) {
         await createUserWithEmailAndPassword(auth, email, password);
+        await db.collection("users").add({
+          id: auth.currentUser.uid,
+          email: email,
+          name: name,
+          phone: phone,
+        });
       } else setErrorPassword("Passwords don't match");
     } catch (e) {
       alert(e.message);
     }
   };
-
-  //   const signInGoogle = async () => {
-  //     try {
-  //       await signInWithPopup(auth, provider).then((result) => {
-  //         // This gives you a Google Access Token. You can use it to access the Google API.
-  //         const credential = GoogleAuthProvider.credentialFromResult(result);
-  //         const token = credential.accessToken;
-  //         // The signed-in user info.
-  //         const user = result.user;
-  //         // IdP data available using getAdditionalUserInfo(result)
-  //         // ...
-  //       });
-  //     } catch (error) {
-  //       // Handle Errors here.
-  //       const errorCode = error.code;
-  //       const errorMessage = error.message;
-  //       // The email of the user's account used.
-  //       const email = error.customData.email;
-  //       // The AuthCredential type that was used.
-  //       const credential = GoogleAuthProvider.credentialFromError(error);
-  //       // ...
-  //     }
-  //   };
 
   if (screen === "login") {
     return (
@@ -108,25 +89,6 @@ const LoginScreen = () => {
             <Text style={login_style.form_button_text}>Sign in</Text>
           </TouchableOpacity>
         </View>
-        {/* <View>
-          <Text
-            style={{
-              textAlign: "center",
-              fontSize: 16,
-              fontWeight: "bold",
-              marginBottom: 20,
-            }}
-          >
-            - Or -
-          </Text>
-          <TouchableOpacity
-            onPress={signInGoogle}
-            style={login_style.google_login_button}
-          >
-            <Text style={login_style.glb_text}>Sign in with Google</Text>
-            <Image source={GoogleIcon} style={{ width: 20, height: 20 }} />
-          </TouchableOpacity>
-        </View> */}
         <View>
           <View style={{ flexDirection: "row", gap: 10, marginBottom: 10 }}>
             <Text style={{ fontSize: 16 }}>Don't have an account?</Text>
@@ -146,12 +108,18 @@ const LoginScreen = () => {
         </View>
         <View style={login_style.form}>
           <Text style={login_style.form_title}>Create new account</Text>
-          {/* <TextInput
+          <TextInput
             style={login_style.form_input}
             placeholder="Full name"
             value={name}
             onChangeText={(text) => setName(text)}
-          /> */}
+          />
+          <TextInput
+            style={login_style.form_input}
+            placeholder="Phone number"
+            value={phone}
+            onChangeText={(text) => setPhone(text)}
+          />
           <TextInput
             style={login_style.form_input}
             placeholder="Email"

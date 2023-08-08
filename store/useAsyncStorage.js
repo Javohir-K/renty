@@ -7,7 +7,7 @@ function useLocalStorage(key, initialValue) {
       const item = AsyncStorage.getItem(key);
       return item ? JSON.parse(item) : initialValue;
     } catch (error) {
-      console.error(error);
+      // console.error(error);
       return initialValue;
     }
   });
@@ -19,7 +19,7 @@ function useLocalStorage(key, initialValue) {
       setStoredValue(valueToStore);
       AsyncStorage.setItem(key, JSON.stringify(valueToStore));
     } catch (error) {
-      console.error(error);
+      // console.error(error);
     }
   };
 

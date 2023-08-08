@@ -8,8 +8,6 @@ import { colors, food_card_style } from "../design/style";
 import {
   CartDispatchContext,
   addToCart,
-  removeFromCart,
-  updateQty,
 } from "../store/cart";
 
 const FoodCard = ({ image, id, name, desc, price, handleAdd }) => {

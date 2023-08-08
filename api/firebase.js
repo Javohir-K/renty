@@ -2,6 +2,7 @@ import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
 import "firebase/compat/firestore";
 import { getAuth } from "firebase/auth";
+import { getFirestore } from "firebase/firestore";
 const firebaseConfig = {
   apiKey: "AIzaSyA9sqT_CrgcX4vlD2W9bhyiTbvXrSQrIvQ",
   authDomain: "renty-food.firebaseapp.com",
@@ -15,5 +16,6 @@ const firebaseConfig = {
 const app = firebase.initializeApp(firebaseConfig);
 
 const db = app.firestore();
+const base = getFirestore(app);
 const auth = getAuth();
-export { db, auth };
+export { db, auth, base };

@@ -392,12 +392,12 @@ export const back_btn_style = StyleSheet.create({
   container: {
     paddingTop: statusBarHeight,
     flexDirection: "row",
-    paddingBottom: 8,
+    // paddingBottom: 8,
     alignItems: "center",
     justifyContent: "space-between",
     backgroundColor: colors._accent,
-    borderBottomLeftRadius: 24,
-    borderBottomRightRadius: 24,
+    // borderBottomLeftRadius: 24,
+    // borderBottomRightRadius: 24,
   },
   text: {
     fontWeight: "bold",
